@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import "./style.css";
+// import "./style.css";
+
 import { supabase } from "../supabaseClient";
 
 function App() {
@@ -20,8 +21,6 @@ function App() {
     }
   };
 
-  const handleClickClearChat = async () => setData([]);
-
   useEffect(() => {
     const fetchData = async function () {
       try {
@@ -41,35 +40,47 @@ function App() {
         payload ? fetchData() : null;
       })
       .subscribe();
+
+    return () => supabase.removeSubscription(mySubscription);
   }, []);
 
   return (
-    <main>
-      <div className="chatWrapper">
-        <div className="chatWrapper__screen">
-          <ul className="chatWrapper__list">
+    <div className="container">
+      <div className="bg-white vh-100 w-50  m-auto d-flex flex-column justify-content-between border">
+        <div className="overflow-auto">
+          <ul className="list-group">
             {data?.map((item, index) => (
-              <li className="chatWrapper__listItem" key={index}>
+              <li className="list-group-item" key={index}>
                 {item.message}
               </li>
             ))}
           </ul>
         </div>
-        <form className="chatWrapper__form" onSubmit={handleClick}>
-          <button onClick={handleClickClearChat}>Clear Chat</button>
-          <input
-            type="text"
-            className="chatWrapper__input"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
 
-          <button className="chatWrapper__btn--submit" onClick={handleClick}>
-            Send mess
-          </button>
+        <form
+          className="d-flex justify-content-between input-group-sm"
+          onSubmit={handleClick}
+        >
+          <div className="input-group ">
+            <input
+              type="text"
+              className="form-control"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <div className="input-group-append">
+              <button
+                onClick={handleClick}
+                className="btn btn-outline-primary"
+                type="button"
+              >
+                Send message
+              </button>
+            </div>
+          </div>
         </form>
       </div>
-    </main>
+    </div>
   );
 }
 
