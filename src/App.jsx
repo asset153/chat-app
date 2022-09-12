@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import { supabase } from "../supabaseClient";
 
@@ -33,9 +33,15 @@ function App() {
     };
 
     fetchData();
-  }, []);
 
-  console.log(data);
+    const mySubscription = supabase
+      .from("*")
+      .on("*", (payload) => {
+        console.log("Change received!", payload);
+        payload ? fetchData() : null;
+      })
+      .subscribe();
+  }, []);
 
   return (
     <main>
