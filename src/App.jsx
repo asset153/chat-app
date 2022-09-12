@@ -46,7 +46,7 @@ function App() {
 
   return (
     <div className="container">
-      <div className="bg-white vh-100 w-50  m-auto d-flex flex-column justify-content-between border">
+      <div className="bg-white vh-100    m-auto d-flex flex-column justify-content-between border">
         <div className="overflow-auto">
           <ul className="list-group">
             {data?.map((item, index) => (
