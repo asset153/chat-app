@@ -5,10 +5,8 @@ const emailValidation = function (email) {
   regex.test(email);
 
   if (regex.test(email)) {
-    console.log(true);
     return true;
   } else {
-    console.log(false);
     return false;
   }
 };
