@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
+import "./styleHeader.css";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
-function Header() {
-  const user = supabase.auth.user();
-
-  console.log(user);
-
+function Header(props) {
   const navigation = useNavigate();
 
-  const signOut = async () => await supabase.auth.signOut();
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   const handleClickSignOut = async function () {
-    navigation("/SignIn");
     signOut();
   };
 
@@ -47,10 +45,12 @@ function Header() {
     </nav>
   );
 
+  console.log("props.isLogin", props.isLogin);
+
   return (
     <header className="messChat__header container-fluid bg-primary text-light d-flex justify-content-between align-items-center">
       <h1>MessChat</h1>
-      {user ? userIsLogin : userIsNotLogin}
+      {props.isLogin === props.SIGNED_IN ? userIsLogin : userIsNotLogin}
     </header>
   );
 }

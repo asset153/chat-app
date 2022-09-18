@@ -1,7 +1,0 @@
-.messChat__header {
-    height: 75px;
-}
-
-.messChat__chat {
-    min-height: calc(100vh - 75px);
-}

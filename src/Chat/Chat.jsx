@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import "./styleChat.css";
 import { supabase } from "../../supabaseClient";
 
-function Chat() {
+function Chat(props) {
   const [value, setValue] = useState("");
   const [data, setData] = useState([]);
+
+  const user = supabase.auth.user();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -12,12 +15,14 @@ function Chat() {
     if (value) {
       const { data } = await supabase
         .from("messages")
-        .insert([{ message: value }]);
+        .insert([{ message: value, user_uuid: user.id }]);
       setData((prevState) => [...prevState, ...data]);
     } else {
       return null;
     }
   };
+
+  console.log(data);
 
   useEffect(() => {
     const fetchData = async function () {
@@ -43,12 +48,20 @@ function Chat() {
   }, []);
 
   return (
-    <div className="messChat__chat bg-white border col-sm-auto col-md-6 m-auto  d-flex flex-column justify-content-between">
+    <div className="messChat__chat bg-white border col-sm-auto col-xxl-4 m-auto d-flex flex-column justify-content-between">
       <div className="overflow-auto">
         <ul className="list-group">
           {data?.map((item, index) => (
-            <li className="list-group-item" key={index}>
-              {item.message}
+            <li
+              className={
+                user?.email
+                  ? "list-group-item d-flex flex-column text-end"
+                  : "list-group-item d-flex flex-column"
+              }
+              key={index}
+            >
+              <span className="fw-bold">{user?.email}</span>
+              <p>{item.message}</p>
             </li>
           ))}
         </ul>

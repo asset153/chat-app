@@ -1,15 +1,50 @@
-import React from "react";
-import Chat from "./Chat/Chat";
-import Header from "./Header/Header";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 import "./style.css";
+import Chat from "./Chat/Chat";
+import SignUp from "./SignUp/SignUp";
+import SignIn from "./SignIn/SignIn";
+import Header from "./Header/Header";
+
+const SIGNED_IN = "SIGNED_IN";
+const SIGNED_OUT = "SIGNED_OUT";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event) => {
+      console.log(event);
+      setIsLogin(event);
+    });
+  }, []);
+
   return (
     <main className="messChat bg-light">
-      <Header />
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
-          <Chat />
+          <BrowserRouter>
+            <Header
+              isLogin={isLogin}
+              SIGNED_IN={SIGNED_IN}
+              SIGNED_OUT={SIGNED_OUT}
+            />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Chat
+                    isLogin={isLogin}
+                    SIGNED_IN={SIGNED_IN}
+                    SIGNED_OUT={SIGNED_OUT}
+                  />
+                }
+              />
+              <Route path="/signUp" element={<SignUp />} />
+              <Route path="/signIn" element={<SignIn />} />
+            </Routes>
+          </BrowserRouter>
         </div>
       </div>
     </main>

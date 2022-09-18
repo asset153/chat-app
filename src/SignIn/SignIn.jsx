@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -34,13 +33,12 @@ function SignIn() {
   };
 
   const handleClickSignIn = async function () {
-    // navigate("/");
     userSignIn();
+    navigate("/");
   };
 
   return (
     <>
-      <Header />
       <div className="container vh-100">
         <div className="row h-75">
           <form className="border col-md-6 p-5 m-auto form-group">

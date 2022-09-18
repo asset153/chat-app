@@ -4,7 +4,6 @@ import "./style.css";
 import emailValidation from "../../utilities/emailValidation";
 import passwordValidation from "../../utilities/passwordValidation";
 import repeatPasswordValidation from "../../utilities/repeatPasswordValidation";
-import Header from "../Header/Header";
 
 function SignUp() {
   const [signUpValue, setSignUpValue] = useState({
@@ -99,7 +98,6 @@ function SignUp() {
 
   return (
     <>
-      <Header />
       <div className="container vh-100">
         <div className="row h-100">
           <form className="border col-md-6 p-5 m-auto form-group">
