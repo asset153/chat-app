@@ -4,7 +4,7 @@ import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 function Header(props) {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -12,6 +12,7 @@ function Header(props) {
 
   const handleClickSignOut = async function () {
     signOut();
+    navigate("/SignIn");
   };
 
   const userIsLogin = (
@@ -29,14 +30,14 @@ function Header(props) {
   const userIsNotLogin = (
     <nav className="btn-group">
       <button
-        onClick={() => navigation("/SignUp")}
+        onClick={() => navigate("/SignUp")}
         type="button"
         className="btn btn-outline-light"
       >
         Sign Up
       </button>
       <button
-        onClick={() => navigation("/SignIn")}
+        onClick={() => navigate("/SignIn")}
         type="button"
         className="btn btn-outline-light"
       >

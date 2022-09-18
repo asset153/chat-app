@@ -41,7 +41,7 @@ function SignIn() {
     <>
       <div className="container vh-100">
         <div className="row h-75">
-          <form className="border col-md-6 p-5 m-auto form-group">
+          <form className="border col-md-6 col-xxl-4  p-5 m-auto form-group">
             <fieldset className="">
               <legend className="fs-3 fw-bold text-primary">Sign In:</legend>
 

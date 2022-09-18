@@ -6,6 +6,7 @@ import Chat from "./Chat/Chat";
 import SignUp from "./SignUp/SignUp";
 import SignIn from "./SignIn/SignIn";
 import Header from "./Header/Header";
+import PageNotFound from "./PageNotFound/PageNotFound";
 
 const SIGNED_IN = "SIGNED_IN";
 const SIGNED_OUT = "SIGNED_OUT";
@@ -31,18 +32,22 @@ function App() {
               SIGNED_OUT={SIGNED_OUT}
             />
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <Chat
-                    isLogin={isLogin}
-                    SIGNED_IN={SIGNED_IN}
-                    SIGNED_OUT={SIGNED_OUT}
-                  />
-                }
-              />
-              <Route path="/signUp" element={<SignUp />} />
-              <Route path="/signIn" element={<SignIn />} />
+              {isLogin === SIGNED_IN ? (
+                <Route
+                  path="/"
+                  element={
+                    <Chat
+                      isLogin={isLogin}
+                      SIGNED_IN={SIGNED_IN}
+                      SIGNED_OUT={SIGNED_OUT}
+                    />
+                  }
+                />
+              ) : (
+                <Route path="/SignIn" element={<SignIn />} />
+              )}
+              <Route path="/SignUp" element={<SignUp />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
         </div>
