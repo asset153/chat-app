@@ -34,7 +34,7 @@ function SignIn() {
 
   const handleClickSignIn = async function () {
     userSignIn();
-    navigate("/");
+    navigate("/Chat");
   };
 
   return (

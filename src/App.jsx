@@ -14,12 +14,17 @@ const SIGNED_OUT = "SIGNED_OUT";
 function App() {
   const [isLogin, setIsLogin] = useState(null);
 
+  const user = supabase.auth.user();
+
   useEffect(() => {
     supabase.auth.onAuthStateChange((event) => {
       console.log(event);
       setIsLogin(event);
     });
   }, []);
+
+  const RouteSignIn = <Route path="/SignIn" element={<SignIn />} />;
+  const RouteChat = <Route path="/Chat" element={<Chat />} />;
 
   return (
     <main className="messChat bg-light">
@@ -32,20 +37,13 @@ function App() {
               SIGNED_OUT={SIGNED_OUT}
             />
             <Routes>
-              {isLogin === SIGNED_IN ? (
-                <Route
-                  path="/"
-                  element={
-                    <Chat
-                      isLogin={isLogin}
-                      SIGNED_IN={SIGNED_IN}
-                      SIGNED_OUT={SIGNED_OUT}
-                    />
-                  }
-                />
-              ) : (
-                <Route path="/SignIn" element={<SignIn />} />
-              )}
+              <Route
+                path="/"
+                element={
+                  isLogin === SIGNED_IN || user?.aud ? <Chat /> : <SignIn />
+                }
+              />
+              {isLogin === SIGNED_IN || user?.aud ? RouteChat : RouteSignIn}
               <Route path="/SignUp" element={<SignUp />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

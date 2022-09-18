@@ -3,8 +3,13 @@ import "./styleHeader.css";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
+const AUD = "authenticated";
+
 function Header(props) {
   const navigate = useNavigate();
+
+  const user = supabase.auth.user();
+  console.log(user);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -16,14 +21,17 @@ function Header(props) {
   };
 
   const userIsLogin = (
-    <nav className="btn-group">
-      <button
-        onClick={handleClickSignOut}
-        type="button"
-        className="btn btn-outline-light"
-      >
-        Sign Out
-      </button>
+    <nav className="">
+      <span className="fw-bold mx-3">{user?.email}</span>
+      <div className="btn-group">
+        <button
+          onClick={handleClickSignOut}
+          type="button"
+          className="btn btn-outline-light"
+        >
+          Sign Out
+        </button>
+      </div>
     </nav>
   );
 
@@ -51,7 +59,9 @@ function Header(props) {
   return (
     <header className="messChat__header container-fluid bg-primary text-light d-flex justify-content-between align-items-center">
       <h1>MessChat</h1>
-      {props.isLogin === props.SIGNED_IN ? userIsLogin : userIsNotLogin}
+      {props.isLogin === props.SIGNED_IN || user?.aud
+        ? userIsLogin
+        : userIsNotLogin}
     </header>
   );
 }
