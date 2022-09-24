@@ -4,8 +4,10 @@ import "./style.css";
 import emailValidation from "../../utilities/emailValidation";
 import passwordValidation from "../../utilities/passwordValidation";
 import repeatPasswordValidation from "../../utilities/repeatPasswordValidation";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [signUpValue, setSignUpValue] = useState({
     email: "",
     password: "",
@@ -69,6 +71,7 @@ function SignUp() {
 
     if (checkValid()) {
       userSignUp();
+      navigate("/");
     } else {
       return null;
     }
@@ -98,9 +101,9 @@ function SignUp() {
 
   return (
     <>
-      <div className="container vh-100">
+      <div className="container signUp_wrapper">
         <div className="row h-100">
-          <form className="border col-md-6 p-5 m-auto form-group">
+          <form className="border col-md-6 col-xxl-4 p-5 m-auto form-group">
             <fieldset className="">
               <legend className="fs-3 fw-bold text-primary">Sign Up:</legend>
 
@@ -113,7 +116,7 @@ function SignUp() {
                   value={email}
                   onChange={handleChangeSignUpValue}
                   className="form-control"
-                  type="text"
+                  type="email"
                 />
               </div>
 
@@ -126,7 +129,7 @@ function SignUp() {
                   value={password}
                   onChange={handleChangeSignUpValue}
                   className="form-control"
-                  type="text"
+                  type="password"
                 />
               </div>
 
@@ -139,7 +142,7 @@ function SignUp() {
                   value={repeatPassword}
                   onChange={handleChangeSignUpValue}
                   className="form-control"
-                  type="text"
+                  type="password"
                 />
               </div>
 

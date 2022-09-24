@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./style.css";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
@@ -39,8 +40,8 @@ function SignIn() {
 
   return (
     <>
-      <div className="container vh-100">
-        <div className="row h-75">
+      <div className="container signIn_wrapper">
+        <div className="row h-100">
           <form className="border col-md-6 col-xxl-4  p-5 m-auto form-group">
             <fieldset className="">
               <legend className="fs-3 fw-bold text-primary">Sign In:</legend>
@@ -54,7 +55,7 @@ function SignIn() {
                   value={email}
                   onChange={handleChangeSignInValue}
                   className="form-control"
-                  type="text"
+                  type="email"
                 />
               </div>
 
@@ -67,7 +68,7 @@ function SignIn() {
                   value={password}
                   onChange={handleChangeSignInValue}
                   className="form-control"
-                  type="text"
+                  type="password"
                 />
               </div>
 
