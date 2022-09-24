@@ -45,7 +45,7 @@ function App() {
               />
               {isLogin === SIGNED_IN || user?.aud ? RouteChat : RouteSignIn}
               <Route path="/SignUp" element={<SignUp />} />
-              <Route path="*" element={<PageNotFound />} />
+              {/* <Route path="*" element={<PageNotFound />} /> */}
             </Routes>
           </BrowserRouter>
         </div>

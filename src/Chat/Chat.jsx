@@ -25,15 +25,16 @@ function Chat(props) {
     }
   };
 
-  console.log(data);
-
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async function () {
       try {
         const { data } = await supabase.from("messages").select();
         setData(data);
-        setIsLoading(false);
+        // setIsLoading(true);
+        setTimeout(() => {
+          return setIsLoading(false);
+        }, 2000);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +53,9 @@ function Chat(props) {
     return () => supabase.removeSubscription(mySubscription);
   }, []);
 
-  const loading = <div>Loading...</div>;
+  const loading = (
+    <div className="placeholder position-fixed top-0 bottom-0 left-0 right-0"></div>
+  );
 
   if (isLoading) {
     return loading;
