@@ -10,6 +10,8 @@ function SignIn() {
     password: "123456",
   });
 
+  const [errorValid, setErrorValid] = useState(false);
+
   const { email, password } = signInValue;
 
   const handleChangeSignInValue = function (e) {
@@ -20,6 +22,7 @@ function SignIn() {
         [name]: value,
       };
     });
+    setErrorValid(false);
   };
 
   const userSignIn = async function () {
@@ -28,14 +31,17 @@ function SignIn() {
         email,
         password,
       });
+
+      if (!error && email.length !== 0 && password.length !== 0) {
+        setErrorValid(false);
+        navigate("/Chat");
+      } else {
+        setErrorValid(true);
+        return null;
+      }
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const handleClickSignIn = async function () {
-    userSignIn();
-    navigate("/Chat");
   };
 
   return (
@@ -72,8 +78,15 @@ function SignIn() {
                 />
               </div>
 
+              <div
+                className={errorValid ? "alert alert-danger p-2" : "d-none"}
+                role="alert"
+              >
+                Incorrect email or password!
+              </div>
+
               <button
-                onClick={handleClickSignIn}
+                onClick={userSignIn}
                 type="button"
                 className="btn btn-primary mt-3"
               >
