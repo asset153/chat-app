@@ -14,8 +14,7 @@ function SignUp() {
     repeatPassword: "",
   });
 
-  const [correctlySignUp, setCorrectlySignUp] = useState(false);
-  const [errorSignUp, setErrorSignUp] = useState("");
+  const [signUpValid, setSignUpValid] = useState(null);
 
   const { email, password, repeatPassword } = signUpValue;
 
@@ -35,10 +34,10 @@ function SignUp() {
       passwordValidation(password) &&
       repeatPasswordValidation(password, repeatPassword)
     ) {
-      console.log(true);
+      setSignUpValid(true);
       return true;
     } else {
-      console.log(false);
+      setSignUpValid(false);
       return false;
     }
   };
@@ -49,12 +48,9 @@ function SignUp() {
         email,
         password,
       });
-
       if (error) {
-        setCorrectlySignUp(false);
-        setErrorSignUp(error.message);
+        console.log(error);
       } else {
-        setCorrectlySignUp(true);
         setSignUpValue({
           email: "",
           password: "",
@@ -78,26 +74,29 @@ function SignUp() {
   };
 
   const registerMessagesSuccess = (
-    <div
-      className={
-        correctlySignUp ? "d-block alert alert-success p-2 my-2" : "d-none"
-      }
-      role="alert"
-    >
-      Your account has been created, now you can sign in.
+    <div className={"d-block alert alert-success p-2 my-2"} role="alert">
+      <p>Your account has been created, now you can sign in.</p>
     </div>
   );
 
   const registerMessagesError = (
-    <div
-      className={
-        !correctlySignUp ? "d-block alert alert-danger p-2 my-2" : "d-none "
-      }
-      role="alert"
-    >
-      {errorSignUp}
+    <div className={"d-block alert alert-danger p-2 my-2"} role="alert">
+      <p>
+        Incorrect password or Address email. Email should contain expected
+        chars, and password should be longer then 6 chars.
+      </p>
     </div>
   );
+
+  const test = function () {
+    if (signUpValid === null) {
+      return null;
+    } else if (signUpValid) {
+      return registerMessagesSuccess;
+    } else if (!signUpValid) {
+      return registerMessagesError;
+    }
+  };
 
   return (
     <>
@@ -115,7 +114,11 @@ function SignUp() {
                   name="email"
                   value={email}
                   onChange={handleChangeSignUpValue}
-                  className="form-control"
+                  className={
+                    !emailValidation(email) && email.length !== 0
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   type="email"
                 />
               </div>
@@ -128,7 +131,11 @@ function SignUp() {
                   name="password"
                   value={password}
                   onChange={handleChangeSignUpValue}
-                  className="form-control"
+                  className={
+                    !passwordValidation(password) && password.length !== 0
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   type="password"
                 />
               </div>
@@ -141,14 +148,17 @@ function SignUp() {
                   name="repeatPassword"
                   value={repeatPassword}
                   onChange={handleChangeSignUpValue}
-                  className="form-control"
+                  className={
+                    !repeatPasswordValidation(password, repeatPassword) &&
+                    repeatPassword.length !== 0
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   type="password"
                 />
               </div>
 
-              {errorSignUp && !correctlySignUp
-                ? registerMessagesError
-                : registerMessagesSuccess}
+              {test()}
 
               <button
                 onClick={handleClickSignUp}
