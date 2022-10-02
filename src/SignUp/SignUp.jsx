@@ -26,6 +26,8 @@ function SignUp() {
         [name]: value,
       };
     });
+
+    setSignUpValid(null);
   };
 
   const checkValid = function () {
@@ -88,7 +90,7 @@ function SignUp() {
     </div>
   );
 
-  const test = function () {
+  const validationResult = function () {
     if (signUpValid === null) {
       return null;
     } else if (signUpValid) {
@@ -158,7 +160,7 @@ function SignUp() {
                 />
               </div>
 
-              {test()}
+              {validationResult()}
 
               <button
                 onClick={handleClickSignUp}
